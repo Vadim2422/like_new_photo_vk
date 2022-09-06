@@ -1,24 +1,31 @@
 from fastapi import FastAPI
 import json
 import vk_api.exceptions
+import os
+
+from server import keep_alive
 
 app = FastAPI()
+keep_alive()
+
+
 @app.get('/')
 def get():
     return 'get'
 
+
 @app.head('/')
 def head():
     return 'head'
+
+
 session = vk_api.VkApi(
-    token='token')
+    token=os.getenv('token'))
 
 
 def main():
     with open('current_user.json', 'r') as file:
         users = json.load(file)['users']
-    data = []
-
     while True:
         for user in users:
             user_data = session.method("users.get", {'user_ids': user, 'fields': 'domain'})

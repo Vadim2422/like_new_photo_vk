@@ -1,9 +1,11 @@
 import uvicorn
+from threading import Thread
 
-if __name__ == "__main__":
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8080,
-        reload=True
-    )
+
+def run():
+    uvicorn.run("main:app", host='0.0.0.0', port=8080)
+
+
+def keep_alive():
+    f = Thread(target=run)
+    f.start()
