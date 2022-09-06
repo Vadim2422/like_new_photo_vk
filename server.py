@@ -1,11 +1,25 @@
 import uvicorn
 from threading import Thread
 
+from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get('/')
+def get():
+    return 'get'
+
+
+@app.head('/')
+def head():
+    return 'head'
+
 
 def run():
-    uvicorn.run("main:app", host='0.0.0.0', port=8080)
+    uvicorn.run("server:app", host='0.0.0.0', port=8080)
 
 
 def keep_alive():
-    f = Thread(target=run)
-    f.start()
+    t = Thread(target=run)
+    t.start()

@@ -1,23 +1,10 @@
-from fastapi import FastAPI
 import json
 import vk_api.exceptions
 import os
 
 from server import keep_alive
 
-app = FastAPI()
 keep_alive()
-
-
-@app.get('/')
-def get():
-    return 'get'
-
-
-@app.head('/')
-def head():
-    return 'head'
-
 
 session = vk_api.VkApi(
     token=os.getenv('token'))
